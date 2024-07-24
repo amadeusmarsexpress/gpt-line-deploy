@@ -18,6 +18,7 @@ export const MODEL_GPT_3_5_TURBO = 'gpt-3.5-turbo';
 export const MODEL_GPT_4_OMNI = 'gpt-4o';
 export const MODEL_WHISPER_1 = 'whisper-1';
 export const MODEL_DALL_E_3 = 'dall-e-3';
+const { Readable } = require('stream');
 
 const client = axios.create({
   baseURL: config.OPENAI_BASE_URL,
@@ -115,17 +116,17 @@ const createThreadAndSendMessage = async ({
     stream,
   };
 
+  const stream = new Readable({
+    read() {}
+  });
+
   const response = await client.post(url, body, { responseType: 'stream' });
+  response.data.pipe(stream);
 
-  for await (const chunk of stream) {
-    console.log(chunk);
-  }
 
-  return new Error('No completed message event found');
-
-  /*return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     let lastEvent = null;
-    response.data.on('data', (chunk) => {
+    stream.on('data', (chunk) => {
       try {
         const event = JSON.parse(chunk.toString());
         console.log(event);
@@ -138,7 +139,17 @@ const createThreadAndSendMessage = async ({
       }
     });
 
-    response.data.on('end', () => {
+    if (lastEvent) {
+      const messageContent = lastEvent.data.content
+        .filter(part => part.type === 'text')
+        .map(part => part.text.value)
+        .join(' ');
+      resolve(messageContent);
+    } else {
+      reject(new Error('No completed message event found'));
+    }
+
+    /*response.data.on('end', () => {
       if (lastEvent) {
         const messageContent = lastEvent.data.content
           .filter(part => part.type === 'text')
@@ -152,8 +163,8 @@ const createThreadAndSendMessage = async ({
 
     response.data.on('error', (error) => {
       reject(error);
-    });
-  });*/
+    });*/
+  });
 };
 
 export {
