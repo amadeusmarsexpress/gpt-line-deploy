@@ -24,9 +24,8 @@ const client = axios.create({
   baseURL: config.OPENAI_BASE_URL,
   timeout: config.OPENAI_TIMEOUT,
   headers: {
-    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Encoding': 'gzip, deflate, compress',
     'OpenAI-Beta': 'assistants=v2',
-    'Connection': 'keep-alive',
   },
 });
 
@@ -117,7 +116,6 @@ const createThreadAndSendMessage = async ({
     "stream" : true,
   };
 
-  console.log(body);
 
   /*const streamPipe = new Readable({
     read() {}
@@ -131,6 +129,7 @@ const createThreadAndSendMessage = async ({
 
   return new Promise((resolve, reject) => {
     let lastEvent = null;
+    console.log(body.toString());
     streamPipe.on('data', (chunk) => {
       try {
         console.log(chunk.toString());
