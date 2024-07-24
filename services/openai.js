@@ -116,6 +116,8 @@ const createThreadAndSendMessage = async ({
     "stream" : true,
   };
 
+  console.log(body);
+
   /*const streamPipe = new Readable({
     read() {}
   });*/
