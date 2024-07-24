@@ -24,6 +24,7 @@ const client = axios.create({
   timeout: config.OPENAI_TIMEOUT,
   headers: {
     'Accept-Encoding': 'gzip, deflate, compress',
+    'OpenAI-Beta': 'assistants=v2',
   },
 });
 
@@ -114,7 +115,6 @@ const createThreadAndSendMessage = async ({
     stream,
   };
 
-  client.headers["OpenAI-Beta"] = 'assistants=v2';
   const response = await client.post(url, body, { responseType: 'stream' });
 
   return new Promise((resolve, reject) => {
