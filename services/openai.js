@@ -2,6 +2,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 import config from '../config/index.js';
 import { handleFulfilled, handleRejected, handleRequest } from './utils/index.js';
+import { Readable } from 'stream';
 
 export const ROLE_SYSTEM = 'system';
 export const ROLE_AI = 'assistant';
@@ -18,7 +19,6 @@ export const MODEL_GPT_3_5_TURBO = 'gpt-3.5-turbo';
 export const MODEL_GPT_4_OMNI = 'gpt-4o';
 export const MODEL_WHISPER_1 = 'whisper-1';
 export const MODEL_DALL_E_3 = 'dall-e-3';
-const { Readable } = require('stream');
 
 const client = axios.create({
   baseURL: config.OPENAI_BASE_URL,
