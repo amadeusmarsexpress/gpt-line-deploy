@@ -117,7 +117,13 @@ const createThreadAndSendMessage = async ({
 
   const response = await client.post(url, body, { responseType: 'stream' });
 
-  return new Promise((resolve, reject) => {
+  for await (const chunk of stream) {
+    console.log(chunk);
+  }
+
+  return new Error('No completed message event found');
+
+  /*return new Promise((resolve, reject) => {
     let lastEvent = null;
     response.data.on('data', (chunk) => {
       try {
@@ -147,7 +153,7 @@ const createThreadAndSendMessage = async ({
     response.data.on('error', (error) => {
       reject(error);
     });
-  });
+  });*/
 };
 
 export {
