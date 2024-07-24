@@ -113,7 +113,7 @@ const createThreadAndSendMessage = async ({
         { role: ROLE_HUMAN, content: initialMessage },
       ],
     },
-    stream : true,
+    "stream" : true,
   };
 
   /*const streamPipe = new Readable({
