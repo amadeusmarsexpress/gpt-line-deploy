@@ -1,6 +1,6 @@
 import config from '../config/index.js';
 import { MOCK_TEXT_OK } from '../constants/mock.js';
-import { createChatCompletion, FINISH_REASON_STOP } from '../services/openai.js';
+import { createChatCompletion, createThreadAndSendMessage, FINISH_REASON_STOP } from '../services/openai.js';
 
 class Completion {
   text;
@@ -29,11 +29,13 @@ const generateCompletion = async ({
   prompt,
 }) => {
   if (config.APP_ENV !== 'production') return new Completion({ text: MOCK_TEXT_OK });
-  const { data } = await createChatCompletion({ messages: prompt.messages });
-  const [choice] = data.choices;
+  //const { data } = await createChatCompletion({ messages: prompt.messages });
+  const responseText = await createThreadAndSendMessage({ assistantId: 'asst_TmjUbkjJWRc3AdAKUJN9wWhO', initialMessage: prompt.messages });
+  //const [choice] = data.choices;
   return new Completion({
-    text: choice.message.content.trim(),
-    finishReason: choice.finish_reason,
+    text: responseText.trim(),
+    //finishReason: choice.finish_reason,
+    finishReason: true,
   });
 };
 

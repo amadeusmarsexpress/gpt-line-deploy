@@ -98,8 +98,59 @@ const createAudioTranscriptions = ({
   });
 };
 
+const createThreadAndSendMessage = async ({
+  assistantId,
+  initialMessage,
+  stream = true,
+}) => {
+  const url = '/v1/threads/runs';
+  const body = {
+    assistant_id: assistantId,
+    thread: {
+      messages: [
+        { role: ROLE_HUMAN, content: initialMessage },
+      ],
+    },
+    stream,
+  };
+
+  client.headers["OpenAI-Beta"] = 'assistants=v2';
+  const response = await client.post(url, body, { responseType: 'stream' });
+
+  return new Promise((resolve, reject) => {
+    let lastEvent = null;
+    response.data.on('data', (chunk) => {
+      try {
+        const event = JSON.parse(chunk.toString());
+        if (event.object === 'thread.message' && event.status === "completed") {
+          lastEvent = event;
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+
+    response.data.on('end', () => {
+      if (lastEvent) {
+        const messageContent = lastEvent.data.content
+          .filter(part => part.type === 'text')
+          .map(part => part.text.value)
+          .join(' ');
+        resolve(messageContent);
+      } else {
+        reject(new Error('No completed message event found'));
+      }
+    });
+
+    response.data.on('error', (error) => {
+      reject(error);
+    });
+  });
+};
+
 export {
   createAudioTranscriptions,
   createChatCompletion,
   createImage,
+  createThreadAndSendMessage,
 };
