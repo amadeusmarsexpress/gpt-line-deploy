@@ -124,6 +124,7 @@ const createThreadAndSendMessage = async ({
 
   const response = await client.post(url, body);
   const readable = Readable.from(response.data);
+  let lastEvent = null;
     readable.on("readable", () => {
       let chunk;
       while (null !== (chunk = readable.read())) {
@@ -132,9 +133,17 @@ const createThreadAndSendMessage = async ({
           Date.now() - requestTime + "ms"
         );*/
         console.log(`read: ${  chunk }`);
-        return Error('No completed message event found');
+        try {
+          const event = JSON.parse(chunk.toString());
+          if (event.object === 'thread.message' && event.status === "completed") {
+            lastEvent = event;
+          }
+        } catch (error) {
+          console.log("ERROR parse");
+          //reject(error);
+        }
       }
-
+      return Error('No completed message event found');
 
     });
 
