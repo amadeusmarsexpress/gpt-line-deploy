@@ -124,24 +124,23 @@ const createThreadAndSendMessage = async ({
   const readable = Readable.from(response.data);
   return new Promise((resolve, reject) => {
     let lastEvent = null;
-    let dataBuffer = '';
 
     readable.on('data', (chunk) => {
-      dataBuffer += chunk.toString();
-      const events = dataBuffer.split('\n\n').filter(Boolean);
+      //dataBuffer += chunk.toString();
+      //const events = dataBuffer.split("\n\n").filter(Boolean);
+      console.log(chunk.toString());
 
-      events.forEach((event) => {
-        try {
-          const parsedEvent = JSON.parse(event);
-          if (parsedEvent.object === 'thread.message' && parsedEvent.status === 'completed') {
-            lastEvent = parsedEvent;
-          }
-        } catch (error) {
-          console.error('Error parsing event:', error);
+      try {
+        const parsedEvent = JSON.parse(chunk);
+        if (
+          parsedEvent.object === "thread.message" &&
+          parsedEvent.status === "completed"
+        ) {
+          lastEvent = parsedEvent;
         }
-      });
-
-      dataBuffer = '';
+      } catch (error) {
+        console.error("Error parsing event:", error);
+      }
     });
 
     readable.on('end', () => {
