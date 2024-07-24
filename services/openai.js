@@ -122,7 +122,7 @@ const createThreadAndSendMessage = async ({
     response.data.on('data', (chunk) => {
       try {
         const event = JSON.parse(chunk.toString());
-        if (event.event.object === 'thread.message' && event.status === "completed") {
+        if (event.object === 'thread.message' && event.status === "completed") {
           lastEvent = event;
         }
       } catch (error) {
