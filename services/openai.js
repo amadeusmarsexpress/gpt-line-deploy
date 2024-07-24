@@ -3,6 +3,7 @@ import FormData from 'form-data';
 import config from '../config/index.js';
 import { handleFulfilled, handleRejected, handleRequest } from './utils/index.js';
 import { Readable } from 'stream';
+import httpAdapter from 'axios/lib/adapters/http';
 
 export const ROLE_SYSTEM = 'system';
 export const ROLE_AI = 'assistant';
@@ -27,6 +28,7 @@ const client = axios.create({
     'Accept-Encoding': 'gzip, deflate, compress',
     'OpenAI-Beta': 'assistants=v2',
   },
+  adapter: httpAdapter, 
 });
 
 client.interceptors.request.use((c) => {
@@ -116,13 +118,14 @@ const createThreadAndSendMessage = async ({
     stream : true,
   };
 
-  const streamPipe = new Readable({
+  /*const streamPipe = new Readable({
     read() {}
-  });
+  });*/
 
   const response = await client.post(url, body, { responseType: 'stream' });
-  console.log(response.data);
-  response.data.pipe(streamPipe);
+  //response.data.pipe(streamPipe);
+
+  const streamPipe = response.data; 
 
 
   return new Promise((resolve, reject) => {
