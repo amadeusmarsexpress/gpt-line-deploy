@@ -27,6 +27,7 @@ const client = axios.create({
     'Accept-Encoding': 'gzip, deflate, compress',
     'OpenAI-Beta': 'assistants=v2',
   },
+  responseType: 'stream'
 });
 
 client.interceptors.request.use((c) => {
@@ -121,15 +122,27 @@ const createThreadAndSendMessage = async ({
     read() {}
   });*/
 
-  const response = await client.post(url, body, { responseType: 'stream' });
-  //response.data.pipe(streamPipe);
+  const response = await client.post(url, body);
+  const readable = Readable.from(response.data);
+    readable.on("readable", () => {
+      let chunk;
+      while (null !== (chunk = readable.read())) {
+        /*console.log(
+          "=========================== ",
+          Date.now() - requestTime + "ms"
+        );*/
+        console.log(`read: ${  chunk }`);
+        return Error('No completed message event found');
+      }
 
-  const streamPipe = response.data; 
+
+    });
 
 
-  return new Promise((resolve, reject) => {
+
+
+  /*return new Promise((resolve, reject) => {
     let lastEvent = null;
-    console.log(body.toString());
     streamPipe.on('data', (chunk) => {
       try {
         console.log(chunk.toString());
@@ -153,7 +166,7 @@ const createThreadAndSendMessage = async ({
       } else {
         reject(new Error('No completed message event found'));
       }
-    })
+    })*/
 
    
 
