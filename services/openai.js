@@ -139,15 +139,19 @@ const createThreadAndSendMessage = async ({
       }
     });
 
-    if (lastEvent) {
-      const messageContent = lastEvent.data.content
-        .filter(part => part.type === 'text')
-        .map(part => part.text.value)
-        .join(' ');
-      resolve(messageContent);
-    } else {
-      reject(new Error('No completed message event found'));
-    }
+    streamPipe.on("end", function () {
+      if (lastEvent) {
+        const messageContent = lastEvent.data.content
+          .filter(part => part.type === 'text')
+          .map(part => part.text.value)
+          .join(' ');
+        resolve(messageContent);
+      } else {
+        reject(new Error('No completed message event found'));
+      }
+    })
+
+   
 
     /*response.data.on('end', () => {
       if (lastEvent) {
