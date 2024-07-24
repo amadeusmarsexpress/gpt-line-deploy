@@ -128,9 +128,11 @@ const createThreadAndSendMessage = async ({
     readable.on('data', (chunk) => {
       //dataBuffer += chunk.toString();
       //const events = dataBuffer.split("\n\n").filter(Boolean);
+      console.log("============================START\n");
       console.log(chunk.toString());
+      console.log("============================END\n");
 
-      try {
+      /*try {
         const parsedEvent = JSON.parse(chunk);
         if (
           parsedEvent.object === "thread.message" &&
@@ -140,7 +142,7 @@ const createThreadAndSendMessage = async ({
         }
       } catch (error) {
         console.error("Error parsing event:", error);
-      }
+      }*/
     });
 
     readable.on('end', () => {
