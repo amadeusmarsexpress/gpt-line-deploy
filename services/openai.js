@@ -143,8 +143,15 @@ const createThreadAndSendMessage = async ({
           //reject(error);
         }
       }
-      return Error('No completed message event found');
-
+      if (lastEvent) {
+        const messageContent = lastEvent.data.content
+          .filter(part => part.type === 'text')
+          .map(part => part.text.value)
+          .join(' ');
+        return messageContent;
+      } else {
+        return Error('No completed message event found');
+      }
     });
 
 
