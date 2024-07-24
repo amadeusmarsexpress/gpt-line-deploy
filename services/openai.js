@@ -121,6 +121,7 @@ const createThreadAndSendMessage = async ({
   });
 
   const response = await client.post(url, body, { responseType: 'stream' });
+  console.log(response.data);
   response.data.pipe(streamPipe);
 
 
