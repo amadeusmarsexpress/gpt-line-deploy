@@ -32,8 +32,8 @@ const exec = (context) => check(context) && (
         const { trimmedText } = context;
         prompt.writeImage(ROLE_HUMAN, trimmedText).write(ROLE_AI);
       }*/
-      const { trimmedText } = context;
-      const { text, isFinishReasonStop } = await generateCompletion({ prompt: trimmedText });
+      //const { trimmedText } = context;
+      const { text, isFinishReasonStop } = await generateCompletion({ prompt: context.trimmedText });
       prompt.patch(text);
       setPrompt(context.userId, prompt);
       updateHistory(context.id, (history) => history.write(config.BOT_NAME, text));
