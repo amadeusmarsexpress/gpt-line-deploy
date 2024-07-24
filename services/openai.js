@@ -116,17 +116,17 @@ const createThreadAndSendMessage = async ({
     stream,
   };
 
-  const stream = new Readable({
+  const streamPipe = new Readable({
     read() {}
   });
 
   const response = await client.post(url, body, { responseType: 'stream' });
-  response.data.pipe(stream);
+  response.data.pipe(streamPipe);
 
 
   return new Promise((resolve, reject) => {
     let lastEvent = null;
-    stream.on('data', (chunk) => {
+    streamPipe.on('data', (chunk) => {
       try {
         const event = JSON.parse(chunk.toString());
         console.log(event);
