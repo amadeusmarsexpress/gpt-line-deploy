@@ -130,8 +130,8 @@ const createThreadAndSendMessage = async ({
     let lastEvent = null;
     streamPipe.on('data', (chunk) => {
       try {
+        console.log(chunk.toString());
         const event = JSON.parse(chunk.toString());
-        console.log(event);
         if (event.object === 'thread.message' && event.status === "completed") {
           lastEvent = event;
         }
