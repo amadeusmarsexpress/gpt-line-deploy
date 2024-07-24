@@ -118,79 +118,37 @@ const createThreadAndSendMessage = async ({
   };
 
 
-  /*const streamPipe = new Readable({
-    read() {}
-  });*/
+  
 
   const response = await client.post(url, body);
   const readable = Readable.from(response.data);
-  let lastEvent = null;
-    readable.on("readable", () => {
-      let chunk;
-      while (null !== (chunk = readable.read())) {
-        /*console.log(
-          "=========================== ",
-          Date.now() - requestTime + "ms"
-        );*/
-        console.log(`read: ${  chunk }`);
+  return new Promise((resolve, reject) => {
+    let lastEvent = null;
+    let dataBuffer = '';
+
+    readable.on('data', (chunk) => {
+      dataBuffer += chunk.toString();
+      const events = dataBuffer.split('\n\n').filter(Boolean);
+
+      events.forEach((event) => {
         try {
-          const event = JSON.parse(chunk.toString());
-          if (event.object === 'thread.message' && event.status === "completed") {
-            lastEvent = event;
+          const parsedEvent = JSON.parse(event);
+          if (parsedEvent.object === 'thread.message' && parsedEvent.status === 'completed') {
+            lastEvent = parsedEvent;
           }
         } catch (error) {
-          console.log("ERROR parse");
-          //reject(error);
+          console.error('Error parsing event:', error);
         }
-      }
-      if (lastEvent) {
-        const messageContent = lastEvent.data.content
-          .filter(part => part.type === 'text')
-          .map(part => part.text.value)
-          .join(' ');
-        return messageContent;
-      } else {
-        return Error('No completed message event found');
-      }
+      });
+
+      dataBuffer = '';
     });
 
-
-
-
-  /*return new Promise((resolve, reject) => {
-    let lastEvent = null;
-    streamPipe.on('data', (chunk) => {
-      try {
-        console.log(chunk.toString());
-        const event = JSON.parse(chunk.toString());
-        if (event.object === 'thread.message' && event.status === "completed") {
-          lastEvent = event;
-        }
-      } catch (error) {
-        console.log("ERROR parse");
-        //reject(error);
-      }
-    });
-
-    streamPipe.on("end", function () {
+    readable.on('end', () => {
       if (lastEvent) {
-        const messageContent = lastEvent.data.content
-          .filter(part => part.type === 'text')
-          .map(part => part.text.value)
-          .join(' ');
-        resolve(messageContent);
-      } else {
-        reject(new Error('No completed message event found'));
-      }
-    })*/
-
-   
-
-    /*response.data.on('end', () => {
-      if (lastEvent) {
-        const messageContent = lastEvent.data.content
-          .filter(part => part.type === 'text')
-          .map(part => part.text.value)
+        const messageContent = lastEvent.content
+          .filter((part) => part.type === 'text')
+          .map((part) => part.text.value)
           .join(' ');
         resolve(messageContent);
       } else {
@@ -198,9 +156,9 @@ const createThreadAndSendMessage = async ({
       }
     });
 
-    response.data.on('error', (error) => {
+    readable.on('error', (error) => {
       reject(error);
-    });*/
+    });
   });
 };
 
