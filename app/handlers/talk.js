@@ -25,13 +25,13 @@ const exec = (context) => check(context) && (
   async () => {
     const prompt = getPrompt(context.userId);
     try {
-      if (context.event.isText) {
+      /*if (context.event.isText) {
         prompt.write(ROLE_HUMAN, `${t('__COMPLETION_DEFAULT_AI_TONE')(config.BOT_TONE)}${context.trimmedText}`).write(ROLE_AI);
       }
       if (context.event.isImage) {
         const { trimmedText } = context;
         prompt.writeImage(ROLE_HUMAN, trimmedText).write(ROLE_AI);
-      }
+      }*/
       const { text, isFinishReasonStop } = await generateCompletion({ prompt });
       prompt.patch(text);
       setPrompt(context.userId, prompt);
