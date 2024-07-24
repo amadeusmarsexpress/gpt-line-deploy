@@ -24,8 +24,9 @@ const client = axios.create({
   baseURL: config.OPENAI_BASE_URL,
   timeout: config.OPENAI_TIMEOUT,
   headers: {
-    'Accept-Encoding': 'gzip, deflate, compress',
+    'Accept-Encoding': 'gzip, deflate, br',
     'OpenAI-Beta': 'assistants=v2',
+    'Connection': 'keep-alive',
   },
 });
 
