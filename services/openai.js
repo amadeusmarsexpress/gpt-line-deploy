@@ -21,6 +21,11 @@ export const MODEL_GPT_4_OMNI = 'gpt-4o';
 export const MODEL_WHISPER_1 = 'whisper-1';
 export const MODEL_DALL_E_3 = 'dall-e-3';
 
+import OpenAI from 'openai';
+const clientO = OpenAI({
+  apiKey : config.OPENAI_API_KEY
+});
+
 const client = axios.create({
   baseURL: config.OPENAI_BASE_URL,
   timeout: config.OPENAI_TIMEOUT,
@@ -107,7 +112,7 @@ const createThreadAndSendMessage = async ({
   initialMessage,
   stream = true,
 }) => {
-  const url = '/v1/threads/runs';
+  /*const url = '/v1/threads/runs';
   const body = {
     assistant_id: assistantId,
     thread: {
@@ -116,12 +121,61 @@ const createThreadAndSendMessage = async ({
       ],
     },
     "stream" : true,
-  };
+  };*/
 
+
+  const thread = clientO.beta.threads.create(
+    messages=[
+      {
+        "role": "user",
+        "content": initialMessage
+      }
+    ]
+  )
+
+  const myRun = clientO.beta.threads.runs.create(
+    thread.id,
+    {
+      assistant_id: assistantId,
+    }
+  )
+
+  const retrieveRun = async () => {
+    let keepRetrievingRun;
+
+    while (myRun.status !== "completed") {
+      keepRetrievingRun = await client.beta.threads.runs.retrieve(
+        thread.id, // Use the stored thread ID for this user
+        myRun.id
+      );
+
+      console.log(`Run status: ${keepRetrievingRun.status}`);
+
+      if (keepRetrievingRun.status === "completed") {
+        console.log("\n");
+        break;
+      }
+    }
+  };
+  //await retrieveRun();
 
   
+  const waitForAssistantMessage = async () => {
+    await retrieveRun();
 
-  const response = await client.post(url, body);
+    const allMessages = await clientO.beta.threads.messages.list(
+      thread.id // Use the stored thread ID for this user
+    );
+
+    console.log("User: ", myThreadMessage.content[0].text.value);
+    console.log("Assistant: ", allMessages.data[0].content[0].text.value);
+
+    return allMessages.data[0].content[0].text.value;
+
+  };
+  return await waitForAssistantMessage();  
+
+  /*const response = await client.post(url, body);
   const readable = Readable.from(response.data);
   return new Promise((resolve, reject) => {
     let lastEvent = null;
@@ -135,17 +189,6 @@ const createThreadAndSendMessage = async ({
       //console.log(chunk.toString());
       //console.log("============================END\n");
 
-      /*try {
-        const parsedEvent = JSON.parse(chunk);
-        if (
-          parsedEvent.object === "thread.message" &&
-          parsedEvent.status === "completed"
-        ) {
-          lastEvent = parsedEvent;
-        }
-      } catch (error) {
-        console.error("Error parsing event:", error);
-      }*/
     });
 
     readable.on('end', () => {
@@ -164,7 +207,7 @@ const createThreadAndSendMessage = async ({
     readable.on('error', (error) => {
       reject(error);
     });
-  });
+  });*/
 };
 
 export {
