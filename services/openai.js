@@ -124,10 +124,10 @@ const createThreadAndSendMessage = async ({
   };*/
 
 
-  const thread = clientO.beta.threads.create()
+  const myThread = clientO.beta.threads.create()
 
   const myThreadMessage = await clientO.beta.threads.messages.create(
-    thread.id, // Use the stored thread ID for this user
+    myThread.id, // Use the stored thread ID for this user
     {
       role: "user",
       content: initialMessage,
@@ -135,7 +135,7 @@ const createThreadAndSendMessage = async ({
   );
 
   const myRun = clientO.beta.threads.runs.create(
-    thread.id,
+    myThread.id,
     {
       assistant_id: assistantId,
     }
@@ -146,7 +146,7 @@ const createThreadAndSendMessage = async ({
 
     while (myRun.status !== "completed") {
       keepRetrievingRun = await client.beta.threads.runs.retrieve(
-        thread.id, // Use the stored thread ID for this user
+        myThread.id, // Use the stored thread ID for this user
         myRun.id
       );
 
@@ -165,7 +165,7 @@ const createThreadAndSendMessage = async ({
     await retrieveRun();
 
     const allMessages = await clientO.beta.threads.messages.list(
-      thread.id // Use the stored thread ID for this user
+      myThread.id // Use the stored thread ID for this user
     );
 
     console.log("User: ", myThreadMessage.content[0].text.value);
