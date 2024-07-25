@@ -31,13 +31,13 @@ const generateCompletion = async ({
   if (config.APP_ENV !== 'production') return new Completion({ text: MOCK_TEXT_OK });
   //const { data } = await createChatCompletion({ messages: prompt.messages });
   //console.log(prompt)
-  const responseText = await createThreadAndSendMessage({ assistantId: 'asst_TmjUbkjJWRc3AdAKUJN9wWhO', initialMessage: prompt });
+  const responseText = await createThreadAndSendMessage({ assistantId: 'asst_lGq4I4ZmSxB90OmdfGyulXwt', initialMessage: prompt });
   //console.log(responseText);
   //const [choice] = data.choices;
   return new Completion({
     text: responseText.trim(),
     //finishReason: choice.finish_reason,
-    finishReason: true,
+    finishReason: false,
   });
 };
 
