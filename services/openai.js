@@ -124,14 +124,15 @@ const createThreadAndSendMessage = async ({
   };*/
 
 
-  const thread = clientO.beta.threads.create(
-    messages=[
-      {
-        "role": "user",
-        "content": initialMessage
-      }
-    ]
-  )
+  const thread = clientO.beta.threads.create()
+
+  const myThreadMessage = await openai.beta.threads.messages.create(
+    thread.id, // Use the stored thread ID for this user
+    {
+      role: "user",
+      content: initialMessage,
+    }
+  );
 
   const myRun = clientO.beta.threads.runs.create(
     thread.id,
