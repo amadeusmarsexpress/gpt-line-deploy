@@ -119,7 +119,7 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
     
     if(myThread == null) {
       myThread = await clientO.beta.threads.create();
-      setThreads(userId, myThread.id);
+      setThreads(userId, myThread);
     }
     console.log("Thread created with ID:", myThread.id);
 
