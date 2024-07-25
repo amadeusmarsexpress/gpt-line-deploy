@@ -127,7 +127,7 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, stream 
     // Create a run
     const myRun = await clientO.beta.threads.runs.create(myThread.id, {
       assistant_id: assistantId,
-      max_completion_tokens: 2500,
+      max_completion_tokens: 3500,
     });
     console.log("Run created with ID:", myRun.id);
 
