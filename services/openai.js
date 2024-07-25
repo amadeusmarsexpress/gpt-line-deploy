@@ -127,9 +127,11 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, stream 
     // Create a run
     const myRun = await clientO.beta.threads.runs.create(myThread.id, {
       assistant_id: assistantId,
-      max_completion_tokens: 100,
+      max_completion_tokens: 500,
     });
     console.log("Run created with ID:", myRun.id);
+
+    let isComplete = false;
 
     // Function to retrieve the run status
     const retrieveRun = async () => {
@@ -139,8 +141,15 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, stream 
 
         if (runStatus.status === "completed") {
           console.log("\n");
+          isComplete = true;
           break;
         }
+        
+        if (runStatus.status === "incomplete") {
+          console.log("\n");
+          break;
+        }
+
 
         await new Promise(resolve => setTimeout(resolve, 200)); // Wait for 1 second before checking again
       }
@@ -149,17 +158,23 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, stream 
     // Wait for the run to complete
     await retrieveRun();
 
-    // Retrieve all messages in the thread
-    const allMessages = await clientO.beta.threads.messages.list(myThread.id);
-    console.log("All messages retrieved:", allMessages);
+    if(isComplete) {
+      // Retrieve all messages in the thread
+      const allMessages = await clientO.beta.threads.messages.list(myThread.id);
+      console.log("All messages retrieved:", allMessages);
 
-    const userMessage = allMessages.data.find(msg => msg.role === "user");
-    const assistantMessage = allMessages.data.find(msg => msg.role === "assistant");
+      const userMessage = allMessages.data.find((msg) => msg.role === "user");
+      const assistantMessage = allMessages.data.find(
+        (msg) => msg.role === "assistant"
+      );
 
-    console.log("User:", userMessage?.content[0]?.text?.value);
-    console.log("Assistant:", assistantMessage?.content[0]?.text?.value);
+      console.log("User:", userMessage?.content[0]?.text?.value);
+      console.log("Assistant:", assistantMessage?.content[0]?.text?.value);
 
-    return assistantMessage?.content[0]?.text?.value;
+      return assistantMessage?.content[0]?.text?.value;
+    } else {
+      return "คำตอบยาวไปตอบมะได้จ้า";
+    }
   } catch (error) {
     console.error("Error in createThreadAndSendMessage:", error.message);
   }
