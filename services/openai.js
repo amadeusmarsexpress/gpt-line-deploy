@@ -3,6 +3,7 @@ import FormData from 'form-data';
 import config from '../config/index.js';
 import { handleFulfilled, handleRejected, handleRequest } from './utils/index.js';
 import { Readable } from 'stream';
+import { count } from 'console';
 
 export const ROLE_SYSTEM = 'system';
 export const ROLE_AI = 'assistant';
@@ -125,12 +126,14 @@ const createThreadAndSendMessage = async ({
   return new Promise((resolve, reject) => {
     let lastEvent = null;
 
+    count = 0;
     readable.on('data', (chunk) => {
+      count++
       //dataBuffer += chunk.toString();
       //const events = dataBuffer.split("\n\n").filter(Boolean);
-      console.log("============================START\n");
-      console.log(chunk.toString());
-      console.log("============================END\n");
+      //console.log("============================START\n");
+      //console.log(chunk.toString());
+      //console.log("============================END\n");
 
       /*try {
         const parsedEvent = JSON.parse(chunk);
@@ -146,6 +149,7 @@ const createThreadAndSendMessage = async ({
     });
 
     readable.on('end', () => {
+      console.log(`message count : ${count}`);
       if (lastEvent) {
         const messageContent = lastEvent.content
           .filter((part) => part.type === 'text')
