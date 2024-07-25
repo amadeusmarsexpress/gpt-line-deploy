@@ -22,7 +22,7 @@ export const MODEL_WHISPER_1 = 'whisper-1';
 export const MODEL_DALL_E_3 = 'dall-e-3';
 
 import OpenAI from 'openai';
-const clientO = OpenAI({
+const clientO = new OpenAI({
   apiKey : config.OPENAI_API_KEY
 });
 
