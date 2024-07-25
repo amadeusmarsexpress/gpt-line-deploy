@@ -106,109 +106,62 @@ const createAudioTranscriptions = ({
     headers: formData.getHeaders(),
   });
 };
+const createThreadAndSendMessage = async ({ assistantId, initialMessage, stream = true }) => {
+  try {
+    // Ensure clientO and beta are properly defined
+    if (!clientO || !clientO.beta || !clientO.beta.threads || !clientO.beta.threads.messages) {
+      throw new Error("clientO or its properties are not defined properly");
+    }
 
-const createThreadAndSendMessage = async ({
-  assistantId,
-  initialMessage,
-  stream = true,
-}) => {
-  /*const url = '/v1/threads/runs';
-  const body = {
-    assistant_id: assistantId,
-    thread: {
-      messages: [
-        { role: ROLE_HUMAN, content: initialMessage },
-      ],
-    },
-    "stream" : true,
-  };*/
+    // Create a thread
+    const myThread = await clientO.beta.threads.create();
+    console.log("Thread created with ID:", myThread.id);
 
-
-  const myThread = await clientO.beta.threads.create()
-
-  const myThreadMessage = await clientO.beta.threads.messages.create(
-    myThread.id, // Use the stored thread ID for this user
-    {
+    // Send an initial message
+    const myThreadMessage = await clientO.beta.threads.messages.create(myThread.id, {
       role: "user",
       content: initialMessage,
-    }
-  );
+    });
+    console.log("Message sent with ID:", myThreadMessage.id);
 
-  const myRun = await clientO.beta.threads.runs.create(
-    myThread.id,
-    {
+    // Create a run
+    const myRun = await clientO.beta.threads.runs.create(myThread.id, {
       assistant_id: assistantId,
-    }
-  )
+    });
+    console.log("Run created with ID:", myRun.id);
 
-  const retrieveRun = async () => {
-    let keepRetrievingRun;
+    // Function to retrieve the run status
+    const retrieveRun = async () => {
+      while (true) {
+        const runStatus = await clientO.beta.threads.runs.retrieve(myThread.id, myRun.id);
+        console.log(`Run status: ${runStatus.status}`);
 
-    while (myRun.status !== "completed") {
-      keepRetrievingRun = await client.beta.threads.runs.retrieve(
-        myThread.id, // Use the stored thread ID for this user
-        myRun.id
-      );
+        if (runStatus.status === "completed") {
+          console.log("\n");
+          break;
+        }
 
-      console.log(`Run status: ${keepRetrievingRun.status}`);
-
-      if (keepRetrievingRun.status === "completed") {
-        console.log("\n");
-        break;
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for 1 second before checking again
       }
-    }
-  };
-  //await retrieveRun();
+    };
 
-  
-  const waitForAssistantMessage = async () => {
+    // Wait for the run to complete
     await retrieveRun();
 
-    const allMessages = await clientO.beta.threads.messages.list(
-      myThread.id // Use the stored thread ID for this user
-    );
+    // Retrieve all messages in the thread
+    const allMessages = await clientO.beta.threads.messages.list(myThread.id);
+    console.log("All messages retrieved:", allMessages);
 
-    console.log("User: ", myThreadMessage.content[0].text.value);
-    console.log("Assistant: ", allMessages.data[0].content[0].text.value);
+    const userMessage = allMessages.data.find(msg => msg.role === "user");
+    const assistantMessage = allMessages.data.find(msg => msg.role === "assistant");
 
-    return allMessages.data[0].content[0].text.value;
+    console.log("User:", userMessage?.content[0]?.text?.value);
+    console.log("Assistant:", assistantMessage?.content[0]?.text?.value);
 
-  };
-  return await waitForAssistantMessage();  
-
-  /*const response = await client.post(url, body);
-  const readable = Readable.from(response.data);
-  return new Promise((resolve, reject) => {
-    let lastEvent = null;
-
-    let count = 0;
-    readable.on('data', (chunk) => {
-      count++
-      //dataBuffer += chunk.toString();
-      //const events = dataBuffer.split("\n\n").filter(Boolean);
-      //console.log("============================START\n");
-      //console.log(chunk.toString());
-      //console.log("============================END\n");
-
-    });
-
-    readable.on('end', () => {
-      console.log(`message count : ${count}`);
-      if (lastEvent) {
-        const messageContent = lastEvent.content
-          .filter((part) => part.type === 'text')
-          .map((part) => part.text.value)
-          .join(' ');
-        resolve(messageContent);
-      } else {
-        reject(new Error('No completed message event found'));
-      }
-    });
-
-    readable.on('error', (error) => {
-      reject(error);
-    });
-  });*/
+    return assistantMessage?.content[0]?.text?.value;
+  } catch (error) {
+    console.error("Error in createThreadAndSendMessage:", error.message);
+  }
 };
 
 export {
