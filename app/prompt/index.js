@@ -2,6 +2,8 @@ import Prompt from './prompt.js';
 
 const prompts = new Map();
 
+const threads = new Map();
+
 /**
  * @param {string} userId
  * @returns {Prompt}
@@ -14,6 +16,12 @@ const getPrompt = (userId) => prompts.get(userId) || new Prompt();
  */
 const setPrompt = (userId, prompt) => {
   prompts.set(userId, prompt);
+};
+
+const getThreads = (userId) => threads.get(userId) || null;
+
+const setThreads = (userId, threadId) => {
+  threads.set(userId, threadId);
 };
 
 /**
@@ -35,6 +43,8 @@ export {
   setPrompt,
   removePrompt,
   printPrompts,
+  getThreads,
+  setThreads
 };
 
 export default prompts;
