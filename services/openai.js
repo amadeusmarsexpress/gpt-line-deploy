@@ -126,7 +126,7 @@ const createThreadAndSendMessage = async ({
   return new Promise((resolve, reject) => {
     let lastEvent = null;
 
-    count = 0;
+    let count = 0;
     readable.on('data', (chunk) => {
       count++
       //dataBuffer += chunk.toString();
