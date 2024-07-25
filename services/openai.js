@@ -124,7 +124,7 @@ const createThreadAndSendMessage = async ({
   };*/
 
 
-  const myThread = clientO.beta.threads.create()
+  const myThread = await clientO.beta.threads.create()
 
   const myThreadMessage = await clientO.beta.threads.messages.create(
     myThread.id, // Use the stored thread ID for this user
@@ -134,7 +134,7 @@ const createThreadAndSendMessage = async ({
     }
   );
 
-  const myRun = clientO.beta.threads.runs.create(
+  const myRun = await clientO.beta.threads.runs.create(
     myThread.id,
     {
       assistant_id: assistantId,
