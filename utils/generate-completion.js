@@ -31,7 +31,7 @@ const generateCompletion = async ({
   if (config.APP_ENV !== 'production') return new Completion({ text: MOCK_TEXT_OK });
   //const { data } = await createChatCompletion({ messages: prompt.messages });
   //console.log(prompt)
-  const responseText = await createThreadAndSendMessage({ assistantId: 'asst_guRR93vAqBDuuTRAN1y9fNtn', initialMessage: prompt, userId });
+  const responseText = await createThreadAndSendMessage({ assistantId: 'asst_crBJys8nxgOEn5eddjtc6HJ0', initialMessage: prompt, userId });
   //console.log(responseText);
   //const [choice] = data.choices;
   return new Completion({
