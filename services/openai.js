@@ -107,6 +107,49 @@ const createAudioTranscriptions = ({
     headers: formData.getHeaders(),
   });
 };
+
+const handleRequiresAction = async (data, runId, threadId) {
+  try {
+    const toolOutputs =
+      data.required_action.submit_tool_outputs.tool_calls.map((toolCall) => {
+        if (toolCall.function.name === "get_wfa_by_date_and_nickname") {
+          return {
+            tool_call_id: toolCall.id,
+            output: "57",
+          };
+        }
+      });
+    // Submit all the tool outputs at the same time
+    await this.submitToolOutputs(toolOutputs, runId, threadId);
+  } catch (error) {
+    console.error("Error processing required action:", error);
+  }
+}
+
+const getWFAByDateAndNickName = (argsJson) {
+  const { dates, nicknames } = argsJson;
+
+  const wfa_data = [
+    { Employee: 'Achi', 'WFA Dates': ['01', '09', '14', '26'] },
+    { Employee: 'Pook', 'WFA Dates': ['02', '09', '14', '20', '26'] },
+    { Employee: 'Gun', 'WFA Dates': ['08', '13', '19', '30'] },
+    { Employee: 'Nan', 'WFA Dates': ['02', '09', '14', '26'] },
+    { Employee: 'Lookplue', 'WFA Dates': ['02', '08', '14', '20', '27'] },
+    { Employee: 'March', 'WFA Dates': ['01', '08', '13', '20', '27'] },
+    { Employee: 'Pompam', 'WFA Dates': ['02', '09', '14', '20', '30'] },
+    { Employee: 'Peary', 'WFA Dates': ['02', '09', '13', '21', '30'] },
+    { Employee: 'Bubble', 'WFA Dates': ['02', '09', '13', '20', '30'] },
+  ];
+
+  const result = wfa_data.filter(employee => 
+    nicknames.includes(employee.Employee) &&
+    employee['WFA Dates'].some(date => dates.includes(date))
+  );
+
+  return JSON.stringify(result, null, 2);
+}
+
+
 const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId, stream = true }) => {
   try {
     // Ensure clientO and beta are properly defined
@@ -134,12 +177,6 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
     const myThreadMessage = await clientO.beta.threads.messages.create(myThread.id, {
       role: "user",
       content: initialMessage,
-      "attachments": [
-        {
-          "file_id": "file-mwh13e9N5U38FpmbT9P9uBWR",
-          "tools": [{"type": "code_interpreter"}]
-        }
-      ]
     });
     console.log("Message sent with ID:", myThreadMessage.id);
 
@@ -169,8 +206,52 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
           break;
         }
 
+        if (runStatus.status === "requires_action") {
+          const requiredAction = run.required_action;
 
-        await new Promise(resolve => setTimeout(resolve, 200)); // Wait for 1 second before checking again
+            if (requiredAction.type === 'submit_tool_outputs') {
+                const toolCalls = requiredAction.submit_tool_outputs.tool_calls;
+                const toolOutputs = [];
+
+                for (const toolCall of toolCalls) {
+                    // Extract the function name from the tool call
+                    const functionName = toolCall.function.name;
+
+                    // Parse the function arguments from the tool call
+                    const functionArgs = JSON.parse(toolCall.function.arguments);
+
+                    // Define the available functions
+                    const availableFunctions = {
+                      get_wfa_by_date_and_nickname: getWFAByDateAndNickName,
+                    };
+                    console.log("Function Name:", functionName);
+
+                    // Look up the actual function to call based on the function name
+                    const functionToCall = availableFunctions[functionName];
+
+                    const functionResponse = await functionToCall(functionArgs);
+                    console.log("Function Response:", functionResponse);
+
+                    const outputString = JSON.stringify(functionResponse);
+
+                    toolOutputs.push({
+                        tool_call_id: toolCall.id,
+                        output: outputString,
+                    });
+                }
+                console.log("toolOutputs: ", toolOutputs);
+
+                await clientO.beta.threads.runs.submitToolOutputs(
+                    threadId,
+                    runId,
+                    { tool_outputs: toolOutputs }
+                );
+            }
+          break;
+        }
+
+
+        await new Promise(resolve => setTimeout(resolve, 100)); // Wait for 1 second before checking again
       }
     };
 
