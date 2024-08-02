@@ -118,7 +118,8 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
     let myThread = getThreads(userId);
     
     if(myThread == null) {
-      myThread = await clientO.beta.threads.create();
+      myThread = await clientO.beta.threads.create(
+      );
       setThreads(userId, myThread);
     }
     console.log("Thread created with ID:", myThread.id);
@@ -127,6 +128,12 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
     const myThreadMessage = await clientO.beta.threads.messages.create(myThread.id, {
       role: "user",
       content: initialMessage,
+      "attachments": [
+        {
+          "file_id": "vs_JVfA5LnmexPQrAN9wS1iwi7H",
+          "tools": [{"type": "code_interpreter"}]
+        }
+      ]
     });
     console.log("Message sent with ID:", myThreadMessage.id);
 
