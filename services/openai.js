@@ -224,8 +224,8 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
                 console.log("toolOutputs: ", toolOutputs);
 
                 await clientO.beta.threads.runs.submitToolOutputs(
-                    threadId,
-                    runId,
+                  myThread.id,
+                  myRun.id,
                     { tool_outputs: toolOutputs }
                 );
             }
