@@ -114,7 +114,7 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
       throw new Error("clientO or its properties are not defined properly");
     }
 
-    file = client.files.create(
+    file = await clientO.files.create(
       file=open("./table.html", "rb"),
       purpose='assistants'
     )
