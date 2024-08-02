@@ -189,7 +189,7 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
         }
 
         if (runStatus.status === "requires_action") {
-          const requiredAction = run.required_action;
+          const requiredAction = runStatus.required_action;
 
             if (requiredAction.type === 'submit_tool_outputs') {
                 const toolCalls = requiredAction.submit_tool_outputs.tool_calls;
