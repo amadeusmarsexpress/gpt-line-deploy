@@ -108,24 +108,6 @@ const createAudioTranscriptions = ({
   });
 };
 
-const handleRequiresAction = async (data, runId, threadId) {
-  try {
-    const toolOutputs =
-      data.required_action.submit_tool_outputs.tool_calls.map((toolCall) => {
-        if (toolCall.function.name === "get_wfa_by_date_and_nickname") {
-          return {
-            tool_call_id: toolCall.id,
-            output: "57",
-          };
-        }
-      });
-    // Submit all the tool outputs at the same time
-    await this.submitToolOutputs(toolOutputs, runId, threadId);
-  } catch (error) {
-    console.error("Error processing required action:", error);
-  }
-}
-
 const getWFAByDateAndNickName = (argsJson) {
   const { dates, nicknames } = argsJson;
 
