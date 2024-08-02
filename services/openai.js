@@ -124,13 +124,12 @@ const getWFAByDateAndNickName = (argsJson) => {
   ];
 
   const result = wfa_data.filter(employee => 
-    nicknames.includes(employee.Employee) &&
+    (nicknames === undefined || nicknames.includes(employee.Employee)) &&
     employee['WFA Dates'].some(date => dates.includes(date))
   );
 
   return JSON.stringify(result, null, 2);
 }
-
 
 const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId, stream = true }) => {
   try {
