@@ -109,6 +109,7 @@ const createAudioTranscriptions = ({
 };
 
 const getWFAByDateAndNickName = (argsJson) => {
+  console.log(argsJson);
   const { dates, nicknames } = argsJson;
 
   const wfa_data = [
