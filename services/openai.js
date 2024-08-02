@@ -114,11 +114,11 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
       throw new Error("clientO or its properties are not defined properly");
     }
 
-    file = await clientO.files.create(
+    /*file = await clientO.files.create(
       file=open("./table.html", "rb"),
       purpose='assistants'
     )
-    console.log("File created with ID:", file.id);
+    console.log("File created with ID2:", file.id);*/
 
     // Create a thread
     let myThread = getThreads(userId);
@@ -136,7 +136,7 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
       content: initialMessage,
       "attachments": [
         {
-          "file_id": file.id,
+          "file_id": "file-mwh13e9N5U38FpmbT9P9uBWR",
           "tools": [{"type": "code_interpreter"}]
         }
       ]
