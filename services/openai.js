@@ -108,6 +108,26 @@ const createAudioTranscriptions = ({
   });
 };
 
+function getToday() {
+  const today = new Date();
+  return String(today.getDate()).padStart(2, '0');
+}
+
+/*function getCurrentWorkweek() {
+  const today = new Date();
+  const dayOfWeek = today.getDay(); // 0 = Sunday, 6 = Saturday
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - (dayOfWeek - 1));
+  
+  const workweek = [];
+  for (let i = 0; i < 5; i++) {
+      const date = new Date(monday);
+      date.setDate(monday.getDate() + i);
+      workweek.push(String(date.getDate()).padStart(2, '0'));
+  }
+  return workweek;
+}*/
+
 const getWFAByDateAndNickName = (argsJson) => {
   console.log(argsJson);
   const { dates, nicknames } = argsJson;
