@@ -128,7 +128,8 @@ const getToday= ()=> {
   // Return the formatted date
   return formattedDate;
 }
-/*function getCurrentWorkweek() {
+
+function getCurrentWorkweek() {
   const today = new Date();
   const dayOfWeek = today.getDay(); // 0 = Sunday, 6 = Saturday
   const monday = new Date(today);
@@ -141,7 +142,7 @@ const getToday= ()=> {
       workweek.push(String(date.getDate()).padStart(2, '0'));
   }
   return workweek;
-}*/
+}
 
 const getWFAByDateAndNickName = (argsJson) => {
   console.log(argsJson);
@@ -161,7 +162,7 @@ const getWFAByDateAndNickName = (argsJson) => {
 
   const result = wfa_data
     .filter(employee =>
-      (nicknames === undefined || nicknames.includes(employee.Employee)) &&
+      (nicknames === undefined || nicknames.length == 0 || nicknames.includes(employee.Employee)) &&
       employee['WFA Dates'].some(date => dates.includes(date))
     )
     .map(employee => ({
