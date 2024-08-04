@@ -279,15 +279,15 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
     if(isComplete) {
       // Retrieve all messages in the thread
       const allMessages = await clientO.beta.threads.messages.list(myThread.id);
-      console.log("All messages retrieved:", allMessages);
+      //console.log("All messages retrieved:", allMessages);
 
       const userMessage = allMessages.data.find((msg) => msg.role === "user");
       const assistantMessage = allMessages.data.find(
         (msg) => msg.role === "assistant"
       );
 
-      console.log("User:", userMessage?.content[0]?.text?.value);
-      console.log("Assistant:", assistantMessage?.content[0]?.text?.value);
+      //console.log("User:", userMessage?.content[0]?.text?.value);
+      //console.log("Assistant:", assistantMessage?.content[0]?.text?.value);
 
       return assistantMessage?.content[0]?.text?.value;
     } else {
