@@ -129,7 +129,7 @@ const getToday= ()=> {
   return formattedDate;
 }
 
-function getCurrentWorkweek() {
+const getCurrentWorkweek = ()=> {
   const today = new Date();
   const dayOfWeek = today.getDay(); // 0 = Sunday, 6 = Saturday
   const monday = new Date(today);
@@ -246,6 +246,7 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
                     // Define the available functions
                     const availableFunctions = {
                       get_today: getToday,
+                      get_current_work_week: getCurrentWorkweek,
                       get_WFA: getWFAByDateAndNickName,
                     };
                     console.log("Function Name:", functionName);
