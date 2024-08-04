@@ -108,11 +108,21 @@ const createAudioTranscriptions = ({
   });
 };
 
-const getToday = () => {
-  const today = new Date();
-  return String(today.getDate()).padStart(2, '0');
-}
+function getToday() {
+  // Get the current date
+  const now = new Date();
 
+  // Extract year, month, and day
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(now.getDate()).padStart(2, '0');
+
+  // Format the date as 'YYYY-MM-DD'
+  const formattedDate = `${year}-${month}-${day}`;
+
+  // Return the formatted date
+  return formattedDate;
+}
 /*function getCurrentWorkweek() {
   const today = new Date();
   const dayOfWeek = today.getDay(); // 0 = Sunday, 6 = Saturday
