@@ -232,7 +232,9 @@ const officeData = wfa_data.map(employee => {
     Employee: employee.Employee,
     'Office Dates': officeDates
   };
-}
+})
+
+return officeData;
 }
 
 const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId, stream = true }) => {
