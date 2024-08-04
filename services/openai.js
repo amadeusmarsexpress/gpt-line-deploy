@@ -108,7 +108,7 @@ const createAudioTranscriptions = ({
   });
 };
 
-function get_today() {
+const getToday= ()=> {
   // Create a Date object representing the current time in UTC
   const now = new Date();
 
