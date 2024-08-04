@@ -144,22 +144,23 @@ const getCurrentWorkweek = ()=> {
   return workweek;
 }
 
+
+const wfa_data = [
+  { Employee: 'Achi', 'WFA Dates': ['01', '09', '14', '26'] },
+  { Employee: 'Pook', 'WFA Dates': ['02', '09', '14', '20', '26'] },
+  { Employee: 'Gun', 'WFA Dates': ['08', '13', '19', '30'] },
+  { Employee: 'Nan', 'WFA Dates': ['02', '09', '14', '26'] },
+  { Employee: 'Lookplue', 'WFA Dates': ['02', '08', '14', '20', '27'] },
+  { Employee: 'March', 'WFA Dates': ['01', '08', '13', '20', '27'] },
+  { Employee: 'Pompam', 'WFA Dates': ['02', '09', '14', '20', '30'] },
+  { Employee: 'Peary', 'WFA Dates': ['02', '09', '13', '21', '30'] },
+  { Employee: 'Bubble', 'WFA Dates': ['02', '09', '13', '20', '30'] },
+];
+
 const getWFAByDateAndNickName = (argsJson) => {
   console.log(argsJson);
   const { dates, nicknames } = argsJson;
-
-  const wfa_data = [
-    { Employee: 'Achi', 'WFA Dates': ['01', '09', '14', '26'] },
-    { Employee: 'Pook', 'WFA Dates': ['02', '09', '14', '20', '26'] },
-    { Employee: 'Gun', 'WFA Dates': ['08', '13', '19', '30'] },
-    { Employee: 'Nan', 'WFA Dates': ['02', '09', '14', '26'] },
-    { Employee: 'Lookplue', 'WFA Dates': ['02', '08', '14', '20', '27'] },
-    { Employee: 'March', 'WFA Dates': ['01', '08', '13', '20', '27'] },
-    { Employee: 'Pompam', 'WFA Dates': ['02', '09', '14', '20', '30'] },
-    { Employee: 'Peary', 'WFA Dates': ['02', '09', '13', '21', '30'] },
-    { Employee: 'Bubble', 'WFA Dates': ['02', '09', '13', '20', '30'] },
-  ];
-
+ 
   const result = wfa_data
     .filter(employee =>
       (nicknames === undefined || nicknames.length == 0 || nicknames.includes(employee.Employee)) &&
@@ -171,6 +172,67 @@ const getWFAByDateAndNickName = (argsJson) => {
     }));
 
   return JSON.stringify(result, null, 2);
+}
+
+
+const getOfficeByDateAndNickName = (argsJson) => {
+  console.log(argsJson);
+  const { dates, nicknames } = argsJson;
+
+  const officeData = getOfficeDateData();
+ 
+  const result = officeData
+    .filter(employee =>
+      (nicknames === undefined || nicknames.length == 0 || nicknames.includes(employee.Employee)) &&
+      employee['Office Dates'].some(date => dates.includes(date))
+    )
+    .map(employee => ({
+      Employee: employee.Employee,
+      'Office Dates': employee['Office Dates'].filter(date => dates.includes(date))
+    }));
+
+  return JSON.stringify(result, null, 2);
+}
+
+const getOfficeDateData = () => {
+
+ 
+// วันหยุดพิเศษ
+const special_holiday = ["05", "12"];
+
+// ดึงเดือนและปีปัจจุบัน
+const today = new Date();
+const currentYear = today.getFullYear();
+const currentMonth = today.getMonth(); // 0-11 (0 = มกราคม, 11 = ธันวาคม)
+
+// หาจำนวนวันในเดือนปัจจุบัน
+const daysInCurrentMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+// สร้าง array ของทุกวันในเดือนปัจจุบันที่ไม่ใช่วันเสาร์อาทิตย์และวันหยุดพิเศษ
+const allOfficeDaysInCurrentMonth = Array.from({ length: daysInCurrentMonth }, (_, i) => {
+  const day = i + 1;
+  const date = day.toString().padStart(2, '0');
+
+  // สร้างวันใหม่สำหรับเดือนปัจจุบัน
+  const dateObj = new Date(currentYear, currentMonth, day);
+  const dayOfWeek = dateObj.getDay();
+
+  // ยกเว้นวันเสาร์ (6), วันอาทิตย์ (0) และวันหยุดพิเศษ
+  if (dayOfWeek !== 0 && dayOfWeek !== 6 && !special_holiday.includes(date)) {
+    return date;
+  }
+  return null;
+}).filter(Boolean); // กรองค่า null ออกไป
+
+const officeData = wfa_data.map(employee => {
+  // หา Office Dates โดยการลบ WFA Dates ออกจากทุกวันที่มีในเดือน
+  const officeDates = allOfficeDaysInCurrentMonth.filter(date => !employee['WFA Dates'].includes(date));
+
+  return {
+    Employee: employee.Employee,
+    'Office Dates': officeDates
+  };
+}
 }
 
 const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId, stream = true }) => {
@@ -248,6 +310,7 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
                       get_today: getToday,
                       get_current_work_week: getCurrentWorkweek,
                       get_WFA: getWFAByDateAndNickName,
+                      get_Office: getOfficeByDateAndNickName
                     };
                     console.log("Function Name:", functionName);
 
