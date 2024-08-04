@@ -159,10 +159,15 @@ const getWFAByDateAndNickName = (argsJson) => {
     { Employee: 'Bubble', 'WFA Dates': ['02', '09', '13', '20', '30'] },
   ];
 
-  const result = wfa_data.filter(employee => 
-    (nicknames === undefined || nicknames.includes(employee.Employee)) &&
-    employee['WFA Dates'].some(date => dates.includes(date))
-  );
+  const result = wfa_data
+    .filter(employee =>
+      (nicknames === undefined || nicknames.includes(employee.Employee)) &&
+      employee['WFA Dates'].some(date => dates.includes(date))
+    )
+    .map(employee => ({
+      Employee: employee.Employee,
+      'WFA Dates': employee['WFA Dates'].filter(date => dates.includes(date))
+    }));
 
   return JSON.stringify(result, null, 2);
 }
