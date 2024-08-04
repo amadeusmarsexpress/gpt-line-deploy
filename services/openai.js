@@ -108,7 +108,7 @@ const createAudioTranscriptions = ({
   });
 };
 
-function getToday() {
+const getToday = () => {
   const today = new Date();
   return String(today.getDate()).padStart(2, '0');
 }
@@ -224,7 +224,8 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
 
                     // Define the available functions
                     const availableFunctions = {
-                      get_wfa_by_date_and_nickname: getWFAByDateAndNickName,
+                      get_today: getToday,
+                      get_WFA: getWFAByDateAndNickName,
                     };
                     console.log("Function Name:", functionName);
 
