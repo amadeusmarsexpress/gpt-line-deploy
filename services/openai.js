@@ -108,14 +108,19 @@ const createAudioTranscriptions = ({
   });
 };
 
-function getToday() {
-  // Get the current date
+function get_today() {
+  // Create a Date object representing the current time in UTC
   const now = new Date();
 
-  // Extract year, month, and day
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-  const day = String(now.getDate()).padStart(2, '0');
+  // Convert the current time to Thailand's timezone (UTC+7)
+  const thailandOffset = 7 * 60; // 7 hours * 60 minutes per hour
+  const localOffset = now.getTimezoneOffset(); // Get local timezone offset in minutes
+  const thTime = new Date(now.getTime() + (thailandOffset + localOffset) * 60000);
+
+  // Extract year, month, and day in Thailand's timezone
+  const year = thTime.getUTCFullYear();
+  const month = String(thTime.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(thTime.getUTCDate()).padStart(2, '0');
 
   // Format the date as 'YYYY-MM-DD'
   const formattedDate = `${year}-${month}-${day}`;
@@ -260,7 +265,7 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
                     { tool_outputs: toolOutputs }
                 );
             }
-          break;
+          //break;
         }
 
 
