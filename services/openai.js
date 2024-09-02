@@ -146,16 +146,16 @@ const getCurrentWorkweek = ()=> {
 
 
 const wfa_data = [
-  { Employee: 'Achi', 'WFA Dates': ['01', '09', '14', '26'] },
-  { Employee: 'Pook', 'WFA Dates': ['02', '09', '14', '20', '26'] },
-  { Employee: 'Gun', 'WFA Dates': ['08', '13', '19', '30'] },
-  { Employee: 'Nan', 'WFA Dates': ['02', '09', '14', '26'] },
-  { Employee: 'Lookplue', 'WFA Dates': ['02', '08', '14', '20', '27'] },
-  { Employee: 'March', 'WFA Dates': ['01', '08', '13', '20', '27'] },
-  { Employee: 'Pompam', 'WFA Dates': ['02', '09', '14', '20', '30'] },
-  { Employee: 'Peary', 'WFA Dates': ['02', '09', '13', '21', '30'] },
-  { Employee: 'Bubble', 'WFA Dates': ['02', '09', '13', '20', '30'] },
-];
+    { Employee: 'Achi', 'WFA Dates': ['04', '09', '16', '23'] },
+    { Employee: 'Pook', 'WFA Dates': ['06', '13', '16', '23'] },
+    { Employee: 'Gun', 'WFA Dates': ['05', '09', '20', '24', '30'] },
+    { Employee: 'Nan', 'WFA Dates': ['06', '13', '16', '23'] },
+    { Employee: 'Lookplue', 'WFA Dates': ['04', '13', '17', '24'] },
+    { Employee: 'March', 'WFA Dates': ['05', '12', '17', '25'] },
+    { Employee: 'Pompam', 'WFA Dates': ['06', '13', '20', '24'] },
+    { Employee: 'Peary', 'WFA Dates': ['06', '09', '16', '23'] },
+    { Employee: 'Bubble', 'WFA Dates': ['06', '09', '16', '23'] },
+  ];
 
 const getWFAByDateAndNickName = (argsJson) => {
   console.log(argsJson);
