@@ -198,7 +198,7 @@ const getOfficeDateData = () => {
 
  
 // วันหยุดพิเศษ
-const special_holiday = ["05", "12"];
+const special_holiday = [];
 
 // ดึงเดือนและปีปัจจุบัน
 const today = new Date();
