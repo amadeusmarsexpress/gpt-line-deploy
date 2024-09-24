@@ -157,13 +157,17 @@ const wfa_data = [
     { Employee: 'Bubble', 'WFA Dates': ['06', '09', '16', '23'] },
   ];
 
+const capitalizeFirstLetter = (data) => {
+    return data.charAt(0).toUpperCase() + data.slice(1);
+}
+
 const getWFAByDateAndNickName = (argsJson) => {
   console.log(argsJson);
   const { dates, nicknames } = argsJson;
  
   const result = wfa_data
     .filter(employee =>
-      (nicknames === undefined || nicknames.length == 0 || nicknames.includes(employee.Employee)) &&
+      (nicknames === undefined || nicknames.length == 0 || nicknames.includes(capitalizeFirstLetter(employee.Employee.toLowerCase()))) &&
       employee['WFA Dates'].some(date => dates.includes(date))
     )
     .map(employee => ({
