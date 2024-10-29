@@ -145,16 +145,16 @@ const getCurrentWorkweek = ()=> {
 }
 
 
-const wfa_data = [
-    { Employee: 'Achi', 'WFA Dates': ['01', '08', '15', '21'] },
-    { Employee: 'Pook', 'WFA Dates': ['04', '11', '18', '25', '28'] },
-    { Employee: 'Gun', 'WFA Dates': ['08', '17', '21', '29'] },
-    { Employee: 'Nan', 'WFA Dates': ['04', '09', '18', '21'] },
-    { Employee: 'Lookplue', 'WFA Dates': ['02', '08', '15', '25', '29'] },
-    { Employee: 'March', 'WFA Dates': ['03', '10', '18', '22', '29'] },
-    { Employee: 'Pompam', 'WFA Dates': ['04', '11', '18', '25'] },
-    { Employee: 'Peary', 'WFA Dates': ['04', '11', '15', '25', '28'] },
-    { Employee: 'Bubble', 'WFA Dates': ['04', '11', '15', '25', '28'] },
+ const wfa_data = [
+    { Employee: 'Achi', 'WFA Dates': ['01', '05', '12', '18', '29'] },
+    { Employee: 'Pook', 'WFA Dates': ['04', '15', '18', '29'] },
+    { Employee: 'Gun', 'WFA Dates': ['05', '14', '19', '28'] },
+    { Employee: 'Nan', 'WFA Dates': ['01', '08', '14', '18', '29'] },
+    { Employee: 'Lookplue', 'WFA Dates': ['05', '12', '19', '26'] },
+    { Employee: 'March', 'WFA Dates': ['05', '14', '20', '27'] },
+    { Employee: 'Pompam', 'WFA Dates': ['01', '08', '15', '19', '29'] },
+    { Employee: 'Peary', 'WFA Dates': ['08', '15', '18', '29'] },
+    { Employee: 'Bubble', 'WFA Dates': ['08', '15', '18', '29'] },
   ];
 
 const capitalizeFirstLetter = (data) => {
@@ -202,7 +202,7 @@ const getOfficeDateData = () => {
 
  
 // วันหยุดพิเศษ
-const special_holiday = ['14','23'];
+const special_holiday = [];
 
 // ดึงเดือนและปีปัจจุบัน
 const today = new Date();
