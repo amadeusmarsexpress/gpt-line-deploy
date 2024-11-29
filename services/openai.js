@@ -144,17 +144,16 @@ const getCurrentWorkweek = ()=> {
   return workweek;
 }
 
-
- const wfa_data = [
-    { Employee: 'Achi', 'WFA Dates': ['01', '05', '12', '18', '29'] },
-    { Employee: 'Pook', 'WFA Dates': ['04', '15', '18', '29'] },
-    { Employee: 'Gun', 'WFA Dates': ['05', '14', '19', '28'] },
-    { Employee: 'Nan', 'WFA Dates': ['01', '08', '14', '18', '29'] },
-    { Employee: 'Lookplue', 'WFA Dates': ['05', '12', '19', '26'] },
-    { Employee: 'March', 'WFA Dates': ['05', '14', '20', '27'] },
-    { Employee: 'Pompam', 'WFA Dates': ['01', '08', '15', '19', '29'] },
-    { Employee: 'Peary', 'WFA Dates': ['08', '15', '18', '29'] },
-    { Employee: 'Bubble', 'WFA Dates': ['08', '15', '18', '29'] },
+  const wfa_data = [
+    { Employee: 'Achi', 'WFA Dates': ['06', '09', '18', '23'] },
+    { Employee: 'Pook', 'WFA Dates': ['06', '09', '16', '27'] },
+    { Employee: 'Gun', 'WFA Dates': ['03', '12', '16', '27'] },
+    { Employee: 'Nan', 'WFA Dates': ['04', '09', '18', '25'] },
+    { Employee: 'Lookplue', 'WFA Dates': ['03', '12', '16', '23'] },
+    { Employee: 'March', 'WFA Dates': ['02', '12', '18', '27'] },
+    { Employee: 'Pompam', 'WFA Dates': ['02', '12', '19', '23'] },
+    { Employee: 'Peary', 'WFA Dates': ['06', '09', '16', '27'] },
+    { Employee: 'Bubble', 'WFA Dates': ['06', '09', '16', '23'] },
   ];
 
 const capitalizeFirstLetter = (data) => {
@@ -202,8 +201,20 @@ const getOfficeDateData = () => {
 
  
 // วันหยุดพิเศษ
-const special_holiday = [];
-
+const special_holiday = ['05', '10', '30', '31'];
+// วันลา (เท่าที่รู้)
+const leaveDate = [
+    { Employee: 'Achi', 'Leave Dates': [] },
+    { Employee: 'Pook', 'Leave Dates': [] },
+    { Employee: 'Gun', 'Leave Dates': [] },
+    { Employee: 'Nan', 'Leave Dates': ['06', '19', '20', '23', '24']},
+    { Employee: 'Lookplue', 'Leave Dates': [] },
+    { Employee: 'March', 'Leave Dates': ['03', '06', '09']},
+    { Employee: 'Pompam', 'Leave Dates': ['20', '27']},
+    { Employee: 'Peary', 'Leave Dates': ['12', '13']},
+    { Employee: 'Bubble', 'Leave Dates': [] },
+  ];
+  
 // ดึงเดือนและปีปัจจุบัน
 const today = new Date();
 const currentYear = today.getFullYear();
