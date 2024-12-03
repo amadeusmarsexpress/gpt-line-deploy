@@ -211,7 +211,12 @@ const getLeave = () => {
       { Employee: 'Bubble', 'Leave Dates': [] },
     ];
   
-  return leaveData.filter(employee => employee['Leave Dates'].length > 0);
+  const result = leaveData
+    .filter(employee => employee['Leave Dates'].length > 0)
+    .map(employee => `- ${employee.Employee} ${JSON.stringify(employee['Leave Dates'])}`)
+    .join('\n');
+
+  return result;
 }
 
 const getOfficeDateData = () => {
