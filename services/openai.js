@@ -211,7 +211,7 @@ const getLeave = () => {
       { Employee: 'Bubble', 'Leave Dates': [] },
     ];
   
-  const result = leaveData
+  const result = leaveDate
     .filter(employee => employee['Leave Dates'].length > 0)
     .map(employee => `- ${employee.Employee} ${JSON.stringify(employee['Leave Dates'])}`)
     .join('\n');
