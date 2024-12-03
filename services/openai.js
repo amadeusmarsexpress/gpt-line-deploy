@@ -197,23 +197,27 @@ const getOfficeByDateAndNickName = (argsJson) => {
   return JSON.stringify(result, null, 2);
 }
 
+const getLeave = () => {
+  // วันลา (เท่าที่รู้)
+  const leaveDate = [
+      { Employee: 'Achi', 'Leave Dates': [] },
+      { Employee: 'Pook', 'Leave Dates': [] },
+      { Employee: 'Gun', 'Leave Dates': [] },
+      { Employee: 'Nan', 'Leave Dates': ['06', '19', '20', '23', '24']},
+      { Employee: 'Lookplue', 'Leave Dates': [] },
+      { Employee: 'March', 'Leave Dates': ['03', '06', '09']},
+      { Employee: 'Pompam', 'Leave Dates': ['20', '27']},
+      { Employee: 'Peary', 'Leave Dates': ['12', '13']},
+      { Employee: 'Bubble', 'Leave Dates': [] },
+    ];
+  
+  return leaveData;
+}
+
 const getOfficeDateData = () => {
 
- 
 // วันหยุดพิเศษ
 const special_holiday = ['05', '10', '30', '31'];
-// วันลา (เท่าที่รู้)
-const leaveDate = [
-    { Employee: 'Achi', 'Leave Dates': [] },
-    { Employee: 'Pook', 'Leave Dates': [] },
-    { Employee: 'Gun', 'Leave Dates': [] },
-    { Employee: 'Nan', 'Leave Dates': ['06', '19', '20', '23', '24']},
-    { Employee: 'Lookplue', 'Leave Dates': [] },
-    { Employee: 'March', 'Leave Dates': ['03', '06', '09']},
-    { Employee: 'Pompam', 'Leave Dates': ['20', '27']},
-    { Employee: 'Peary', 'Leave Dates': ['12', '13']},
-    { Employee: 'Bubble', 'Leave Dates': [] },
-  ];
   
 // ดึงเดือนและปีปัจจุบัน
 const today = new Date();
@@ -327,7 +331,8 @@ const createThreadAndSendMessage = async ({ assistantId, initialMessage, userId,
                       get_today: getToday,
                       get_current_work_week: getCurrentWorkweek,
                       get_WFA: getWFAByDateAndNickName,
-                      get_Office: getOfficeByDateAndNickName
+                      get_Office: getOfficeByDateAndNickName,
+                      get_Leave: getLeave
                     };
                     console.log("Function Name:", functionName);
 
