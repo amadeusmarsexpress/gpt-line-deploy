@@ -211,7 +211,7 @@ const getLeave = () => {
       { Employee: 'Bubble', 'Leave Dates': [] },
     ];
   
-  return leaveData;
+  return leaveData.filter(employee => employee['Leave Dates'].length > 0);
 }
 
 const getOfficeDateData = () => {
