@@ -218,7 +218,7 @@ const getLeave = () => {
     .join('\n');
   
   return result.length > 0
-    ? `${month}\n${result.join('\n')}`
+    ? `${month}\n${result}`
     : "ไม่มีข้อมูลจ้า...";
 }
 
