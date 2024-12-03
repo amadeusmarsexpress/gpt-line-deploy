@@ -199,6 +199,7 @@ const getOfficeByDateAndNickName = (argsJson) => {
 
 const getLeave = () => {
   // วันลา (เท่าที่รู้)
+  const month = "December";
   const leaveDate = [
       { Employee: 'Achi', 'Leave Dates': [] },
       { Employee: 'Pook', 'Leave Dates': [] },
@@ -215,8 +216,10 @@ const getLeave = () => {
     .filter(employee => employee['Leave Dates'].length > 0)
     .map(employee => `- ${employee.Employee} ${JSON.stringify(employee['Leave Dates'])}`)
     .join('\n');
-
-  return result;
+  
+  return result.length > 0
+    ? `${month}\n${result.join('\n')}`
+    : "ไม่มีข้อมูลจ้า...";
 }
 
 const getOfficeDateData = () => {
