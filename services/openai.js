@@ -203,7 +203,7 @@ const getLeave = () => {
   const leaveDate = [
       { Employee: 'Achi', 'Leave Dates': [] },
       { Employee: 'Pook', 'Leave Dates': [] },
-      { Employee: 'Gun', 'Leave Dates': [] },
+      { Employee: 'Gun', 'Leave Dates': ['12'] },
       { Employee: 'Nan', 'Leave Dates': ['06', '19', '20', '23', '24']},
       { Employee: 'Lookplue', 'Leave Dates': ['02'] },
       { Employee: 'March', 'Leave Dates': ['03', '06', '09']},
