@@ -201,14 +201,14 @@ const getLeave = () => {
   // วันลา (เท่าที่รู้)
   const month = "December";
   const leaveDate = [
-      { Employee: 'Achi', 'Leave Dates': ['16'] },
+      { Employee: 'Achi', 'Leave Dates': ['16', '19', '20'] },
       { Employee: 'Pook', 'Leave Dates': [] },
       { Employee: 'Gun', 'Leave Dates': ['12'] },
       { Employee: 'Nan', 'Leave Dates': ['06', '19', '20', '23', '24']},
       { Employee: 'Lookplue', 'Leave Dates': ['02'] },
       { Employee: 'March', 'Leave Dates': ['03', '06', '09']},
       { Employee: 'Pompam', 'Leave Dates': ['20', '27']},
-      { Employee: 'Peary', 'Leave Dates': ['12', '13']},
+      { Employee: 'Peary', 'Leave Dates': ['12', '13', '17']},
       { Employee: 'Bubble', 'Leave Dates': ['04'] },
     ];
   
