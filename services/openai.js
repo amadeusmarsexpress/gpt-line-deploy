@@ -145,15 +145,15 @@ const getCurrentWorkweek = ()=> {
 }
 
   const wfa_data = [
-    { Employee: 'Achi', 'WFA Dates': ['06', '09', '18', '23'] },
-    { Employee: 'Pook', 'WFA Dates': ['06', '09', '16', '27'] },
-    { Employee: 'Gun', 'WFA Dates': ['03', '12', '16', '27'] },
-    { Employee: 'Nan', 'WFA Dates': ['04', '09', '18', '25'] },
-    { Employee: 'Lookplue', 'WFA Dates': ['03', '12', '16', '23'] },
-    { Employee: 'March', 'WFA Dates': ['02', '12', '18', '27'] },
-    { Employee: 'Pompam', 'WFA Dates': ['02', '12', '19', '23'] },
-    { Employee: 'Peary', 'WFA Dates': ['06', '09', '16', '27'] },
-    { Employee: 'Bubble', 'WFA Dates': ['06', '09', '16', '23'] },
+    { Employee: 'Achi', 'WFA Dates': ['10', '31'] },
+    { Employee: 'Pook', 'WFA Dates': ['10', '31'] },
+    { Employee: 'Gun', 'WFA Dates': ['09', '22'] },
+    { Employee: 'Nan', 'WFA Dates': ['17', '31'] },
+    { Employee: 'Lookplue', 'WFA Dates': ['10', '22'] },
+    { Employee: 'March', 'WFA Dates': ['24', '31'] },
+    { Employee: 'Pompam', 'WFA Dates': ['17', '24'] },
+    { Employee: 'Peary', 'WFA Dates': ['10', '31'] },
+    { Employee: 'Bubble', 'WFA Dates': ['10', '31'] },
   ];
 
 const capitalizeFirstLetter = (data) => {
@@ -199,17 +199,17 @@ const getOfficeByDateAndNickName = (argsJson) => {
 
 const getLeave = () => {
   // วันลา (เท่าที่รู้)
-  const month = "December";
+  const month = "January";
   const leaveDate = [
-      { Employee: 'Achi', 'Leave Dates': ['16', '19', '20', '24'] },
+      { Employee: 'Achi', 'Leave Dates': [] },
       { Employee: 'Pook', 'Leave Dates': [] },
-      { Employee: 'Gun', 'Leave Dates': ['12'] },
-      { Employee: 'Nan', 'Leave Dates': ['06', '19', '20', '23', '24']},
-      { Employee: 'Lookplue', 'Leave Dates': ['02'] },
-      { Employee: 'March', 'Leave Dates': ['03', '06', '09']},
-      { Employee: 'Pompam', 'Leave Dates': ['20', '27']},
-      { Employee: 'Peary', 'Leave Dates': ['12', '13', '17']},
-      { Employee: 'Bubble', 'Leave Dates': ['04'] },
+      { Employee: 'Gun', 'Leave Dates': [] },
+      { Employee: 'Nan', 'Leave Dates': []},
+      { Employee: 'Lookplue', 'Leave Dates': [] },
+      { Employee: 'March', 'Leave Dates': []},
+      { Employee: 'Pompam', 'Leave Dates': []},
+      { Employee: 'Peary', 'Leave Dates': []},
+      { Employee: 'Bubble', 'Leave Dates': [] },
     ];
   
   const result = leaveDate
@@ -225,7 +225,7 @@ const getLeave = () => {
 const getOfficeDateData = () => {
 
 // วันหยุดพิเศษ
-const special_holiday = ['05', '10', '30', '31'];
+const special_ = ['01'];
   
 // ดึงเดือนและปีปัจจุบัน
 const today = new Date();
@@ -245,7 +245,7 @@ const allOfficeDaysInCurrentMonth = Array.from({ length: daysInCurrentMonth }, (
   const dayOfWeek = dateObj.getDay();
 
   // ยกเว้นวันเสาร์ (6), วันอาทิตย์ (0) และวันหยุดพิเศษ
-  if (dayOfWeek !== 0 && dayOfWeek !== 6 && !special_holiday.includes(date)) {
+  if (dayOfWeek !== 0 && dayOfWeek !== 6 && !special_.includes(date)) {
     return date;
   }
   return null;
