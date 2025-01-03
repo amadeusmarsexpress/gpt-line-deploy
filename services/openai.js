@@ -214,17 +214,31 @@ const getLeave = () => {
       { Employee: 'March', 'Leave Dates': []},
       { Employee: 'Pompam', 'Leave Dates': []},
       { Employee: 'Peary', 'Leave Dates': []},
-      { Employee: 'Bubble', 'Leave Dates': []},
+      { Employee: 'Bubble', 'Leave Dates': ['02','13']},
     ];
   
-  const result = leaveDate
-    .filter(employee => employee['Leave Dates'].length > 0)
-    .map(employee => `- ${employee.Employee} ${JSON.stringify(employee['Leave Dates'])}`)
-    .join('\n');
+  // กรองพนักงานที่มีข้อมูลวันลา
+  const filteredLeave = leaveDate.filter(employee => employee['Leave Dates'].length > 0);
+
+  // หากไม่มีข้อมูลวันลา
+  if (filteredLeave.length === 0) {
+    return "ไม่มีข้อมูลจ้า...";
+  }
+
+  // สร้างข้อความสำหรับข้อมูลวันลา
+  const leaveList = filteredLeave
+    .map(employee => `- ${employee.Employee} [${employee['Leave Dates'].join(", ")}]`)
+    .join("\n");
+
+  return `❌ วันลา (เท่าที่รู้) ❌\n🏝️ เดือน ${month}:\n${leaveList}`;
+  // const result = leaveDate
+  //   .filter(employee => employee['Leave Dates'].length > 0)
+  //   .map(employee => `- ${employee.Employee} ${JSON.stringify(employee['Leave Dates'])}`)
+  //   .join('\n');
   
-  return result.length > 0
-    ? `${month}\n${result}`
-    : "ไม่มีข้อมูลจ้า...";
+  // return result.length > 0
+  //   ? `${month}\n${result}`
+  //   : "ไม่มีข้อมูลจ้า...";
 }
 
 const getOfficeDateData = () => {
