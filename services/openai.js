@@ -173,7 +173,12 @@ const getWFAByDateAndNickName = (argsJson) => {
       Employee: employee.Employee,
       'WFA Dates': employee['WFA Dates'].filter(date => dates.includes(date))
     }));
-
+  
+  // ตรวจสอบว่ามีข้อมูลหรือไม่
+  if (result.length === 0) {
+        return `ไม่มีข้อมูล WFA สำหรับ ${nicknames.join(", ")}`;
+  }
+  
   return JSON.stringify(result, null, 2);
 }
 
