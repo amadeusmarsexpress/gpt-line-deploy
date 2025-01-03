@@ -214,7 +214,7 @@ const getLeave = () => {
       { Employee: 'March', 'Leave Dates': []},
       { Employee: 'Pompam', 'Leave Dates': []},
       { Employee: 'Peary', 'Leave Dates': []},
-      { Employee: 'Bubble', 'Leave Dates': ['02','13']},
+      { Employee: 'Bubble', 'Leave Dates': []},
     ];
   
   // กรองพนักงานที่มีข้อมูลวันลา
@@ -228,7 +228,7 @@ const getLeave = () => {
   // สร้างข้อความสำหรับข้อมูลวันลา
   const leaveList = filteredLeave
     .map(employee => `- ${employee.Employee} [${employee['Leave Dates'].join(", ")}]`)
-    .join("\n");
+    .join('\n');
 
   return `❌ วันลา (เท่าที่รู้) ❌\n🏝️ เดือน ${month}:\n${leaveList}`;
   // const result = leaveDate
