@@ -175,11 +175,11 @@ const getWFAByDateAndNickName = (argsJson) => {
       'WFA Dates': employee['WFA Dates'].filter(date => dates.includes(date))
     }))
     : wfa_data.filter(employee =>
-      (nicknames === undefined || nicknames.length == 0 || nicknames.includes(capitalizeFirstLetter(employee.Employee.toLowerCase()))))
+      (nicknames === undefined || nicknames.length == 0 || nicknames.includes(capitalizeFirstLetter(employee.Employee.toLowerCase())))
     )
     .map(employee => ({
       Employee: employee.Employee,
-      'WFA Dates': employee['WFA Dates'])
+      'WFA Dates': employee['WFA Dates']
     }));
   
   // ตรวจสอบว่ามีข้อมูลหรือไม่
