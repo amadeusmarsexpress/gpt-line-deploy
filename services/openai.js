@@ -145,15 +145,16 @@ const getCurrentWorkweek = ()=> {
 }
 
   const wfa_data = [
-    { Employee: 'Achi', 'WFA Dates': ['06', '28'] },
-    { Employee: 'Pook', 'WFA Dates': ['04', '24'] },
-    { Employee: 'Gun', 'WFA Dates': ['07', '18'] },
-    { Employee: 'Nan', 'WFA Dates': ['07', '24'] },
-    { Employee: 'Lookplue', 'WFA Dates': ['06', '24'] },
-    { Employee: 'March', 'WFA Dates': ['07', '27 '] },
-    { Employee: 'Pompam', 'WFA Dates': ['07', '28'] },
-    { Employee: 'Peary', 'WFA Dates': ['03', '28'] },
-    { Employee: 'Bubble', 'WFA Dates': ['07', '28'] },
+    { Employee: 'Achi', 'WFA Dates': ['04', '11'] },
+    { Employee: 'Pook', 'WFA Dates': ['04', '28'] },
+    { Employee: 'Gun', 'WFA Dates': [] },
+    { Employee: 'Nan', 'WFA Dates': ['17', '28'] },
+    { Employee: 'Lookplue', 'WFA Dates': ['11', '28'] },
+    { Employee: 'March', 'WFA Dates': ['13', '25'] },
+    { Employee: 'Pompam', 'WFA Dates': ['21', '28'] },
+    { Employee: 'Peary', 'WFA Dates': ['14', '28'] },
+    { Employee: 'Bubble', 'WFA Dates': ['14', '21'] },
+    { Employee: 'IM', 'WFA Dates': ['14', '21'] },
   ];
 
 const capitalizeFirstLetter = (data) => {
