@@ -145,16 +145,16 @@ const getCurrentWorkweek = ()=> {
 }
 
   const wfa_data = [
-    { Employee: 'Achi', 'WFA Dates': ['04', '11'] },
-    { Employee: 'Pook', 'WFA Dates': ['04', '28'] },
-    { Employee: 'Gun', 'WFA Dates': ['13', '20'] },
-    { Employee: 'Nan', 'WFA Dates': ['17', '28'] },
-    { Employee: 'Lookplue', 'WFA Dates': ['11', '28'] },
-    { Employee: 'March', 'WFA Dates': ['13', '25'] },
-    { Employee: 'Pompam', 'WFA Dates': ['21', '28'] },
-    { Employee: 'Peary', 'WFA Dates': ['14', '28'] },
-    { Employee: 'Bubble', 'WFA Dates': ['14', '21'] },
-    { Employee: 'IM', 'WFA Dates': ['14', '21'] },
+    { Employee: 'Achi', 'WFA Dates': ['01', '03', '22'] },
+    { Employee: 'Pook', 'WFA Dates': ['01','04', '21'] },
+    { Employee: 'Gun', 'WFA Dates': ['01','03', '24'] },
+    { Employee: 'Nan', 'WFA Dates': ['01','04', '25'] },
+    { Employee: 'Lookplue', 'WFA Dates': ['01', '03', '22'] },
+    { Employee: 'March', 'WFA Dates': ['25'] },
+    { Employee: 'Pompam', 'WFA Dates': ['01','04', '25'] },
+    { Employee: 'Peary', 'WFA Dates': ['01','04', '25'] },
+    { Employee: 'Bubble', 'WFA Dates': ['01','04', '25'] },
+    { Employee: 'IM', 'WFA Dates': ['01', '04', '21'] },
   ];
 
 const capitalizeFirstLetter = (data) => {
@@ -213,15 +213,15 @@ const getOfficeByDateAndNickName = (argsJson) => {
 
 const getLeave = () => {
   // วันลา (เท่าที่รู้)
-  const month = "January";
+  const month = "May";
   const leaveDate = [
       { Employee: 'Achi', 'Leave Dates': []},
-      { Employee: 'Pook', 'Leave Dates': ['05','06','07','10','11','12']},
+      { Employee: 'Pook', 'Leave Dates': []},
       { Employee: 'Gun', 'Leave Dates': []},
       { Employee: 'Nan', 'Leave Dates': []},
       { Employee: 'Lookplue', 'Leave Dates': []},
-      { Employee: 'March', 'Leave Dates': ['07','10','26','27','28','31']},
-      { Employee: 'Pompam', 'Leave Dates': ['26']},
+      { Employee: 'March', 'Leave Dates': ['01','02','03','04']},
+      { Employee: 'Pompam', 'Leave Dates': []},
       { Employee: 'Peary', 'Leave Dates': []},
       { Employee: 'Bubble', 'Leave Dates': []},
     ];
