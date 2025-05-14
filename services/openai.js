@@ -221,9 +221,9 @@ const getLeave = () => {
       { Employee: 'Nan', 'Leave Dates': []},
       { Employee: 'Lookplue', 'Leave Dates': ['02','06']},
       { Employee: 'March', 'Leave Dates': ['02']},
-      { Employee: 'Pompam', 'Leave Dates': []},
-      { Employee: 'Peary', 'Leave Dates': []},
-      { Employee: 'Bubble', 'Leave Dates': []},
+      { Employee: 'Pompam', 'Leave Dates': ['13','14']},
+      { Employee: 'Peary', 'Leave Dates': ['02']},
+      { Employee: 'Bubble', 'Leave Dates': ['02']},
     ];
   
   // // กรองพนักงานที่มีข้อมูลวันลา
