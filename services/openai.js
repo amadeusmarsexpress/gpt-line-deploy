@@ -145,16 +145,16 @@ const getCurrentWorkweek = ()=> {
 }
 
   const wfa_data = [
-    { Employee: 'Achi', 'WFA Dates': ['23', '29'] },
-    { Employee: 'Pook', 'WFA Dates': ['23', '30'] },
-    { Employee: 'Gun', 'WFA Dates': ['21', '28'] },
-    { Employee: 'Nan', 'WFA Dates': ['23', '26'] },
-    { Employee: 'Lookplue', 'WFA Dates': ['22', '30'] },
-    { Employee: 'March', 'WFA Dates': ['23', '30'] },
-    { Employee: 'Pompam', 'WFA Dates': ['23', '30'] },
-    { Employee: 'Peary', 'WFA Dates': ['22', '30'] },
-    { Employee: 'Bubble', 'WFA Dates': ['23', '30'] },
-    { Employee: 'IM', 'WFA Dates': ['22', '30'] },
+    { Employee: 'Achi', 'WFA Dates': ['13', '27'] },
+    { Employee: 'Pook', 'WFA Dates': ['16', '27'] },
+    { Employee: 'Gun', 'WFA Dates': ['18', '25'] },
+    { Employee: 'Nan', 'WFA Dates': ['20', '27'] },
+    { Employee: 'Lookplue', 'WFA Dates': ['18', '26'] },
+    { Employee: 'March', 'WFA Dates': ['18', '30'] },
+    { Employee: 'Pompam', 'WFA Dates': ['13', '27'] },
+    { Employee: 'Peary', 'WFA Dates': ['20', '23'] },
+    { Employee: 'Bubble', 'WFA Dates': ['27', '30'] },
+    { Employee: 'IM', 'WFA Dates': ['20', '27'] },
   ];
 
 const capitalizeFirstLetter = (data) => {
@@ -213,17 +213,17 @@ const getOfficeByDateAndNickName = (argsJson) => {
 
 const getLeave = () => {
   // วันลา (เท่าที่รู้)
-  const month = "May";
+  const month = "Jun";
   const leaveDate = [
-      { Employee: 'Achi', 'Leave Dates': ['02']},
+      { Employee: 'Achi', 'Leave Dates': []},
       { Employee: 'Pook', 'Leave Dates': []},
       { Employee: 'Gun', 'Leave Dates': []},
       { Employee: 'Nan', 'Leave Dates': []},
-      { Employee: 'Lookplue', 'Leave Dates': ['02','06']},
-      { Employee: 'March', 'Leave Dates': ['02']},
-      { Employee: 'Pompam', 'Leave Dates': ['13','14']},
-      { Employee: 'Peary', 'Leave Dates': ['02']},
-      { Employee: 'Bubble', 'Leave Dates': ['02']},
+      { Employee: 'Lookplue', 'Leave Dates': []},
+      { Employee: 'March', 'Leave Dates': []},
+      { Employee: 'Pompam', 'Leave Dates': []},
+      { Employee: 'Peary', 'Leave Dates': []},
+      { Employee: 'Bubble', 'Leave Dates': []},
     ];
   
   // // กรองพนักงานที่มีข้อมูลวันลา
