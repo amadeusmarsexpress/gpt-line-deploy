@@ -146,13 +146,13 @@ const getCurrentWorkweek = ()=> {
 
   const wfa_data = [
     { Employee: 'Achi', 'WFA Dates': ['14', '22'] },
-    { Employee: 'Pook', 'WFA Dates': ['15', '25'] },
+    { Employee: 'Pook', 'WFA Dates': ['15', '21'] },
     { Employee: 'Gun', 'WFA Dates': ['03', '16'] },
     { Employee: 'Nan', 'WFA Dates': ['04', '21'] },
     { Employee: 'Lookplue', 'WFA Dates': ['15', '21'] },
     { Employee: 'March', 'WFA Dates': ['16', '25'] },
     { Employee: 'Pompam', 'WFA Dates': ['04', '21'] },
-    { Employee: 'Peary', 'WFA Dates': ['14', '25'] },
+    { Employee: 'Peary', 'WFA Dates': ['14', '21'] },
     { Employee: 'Bubble', 'WFA Dates': ['14', '25'] },
     { Employee: 'IM', 'WFA Dates': ['14', '25'] },
   ];
